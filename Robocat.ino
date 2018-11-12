@@ -24,7 +24,7 @@ Max72xxPanel matrix = Max72xxPanel(pinCS, numberOfHorizontalDisplays, numberOfVe
 int spacer = 1; // расстояние между буквами
 int width = 5 + spacer; // размер шрифта
 
-String tape = "TEST";
+//String tape = "TEST"; //тест дисплея
 int wait = 50; // время между крайними перемещениями букв
 
 void setup(){
@@ -53,9 +53,10 @@ void changeTextOfMatrix(String tape){
             letter--;
             x -= width;
         }
-  }
-  matrix.write();
-  
+
+        matrix.write();
+        delay(wait);
+    }
 }
 
 void loop(){
@@ -63,20 +64,15 @@ void loop(){
   Serial.println("\nTerm: ");
   Serial.print(temperature);
   changeTextOfMatrix("Term: " + String(temperature));
-  delay(wait);
-  delay(500);
   float light = 0.512 * (1024 - analogRead(A1));
   Serial.println("\nLight: ");
   Serial.print(light);
   changeTextOfMatrix("Light: " + String(light));
-  delay(wait);
-  delay(500);
   float sound = analogRead(A2);
   Serial.println("\nSound: ");
   Serial.print(sound);
-  changeTextOfMatrix(String(sound));
-  delay(wait);
-  delay(500);
+  changeTextOfMatrix("Sound: " + String(sound));
+  
   if (irrecv.decode(&results))
   {
     Serial.println("\nButton code: ");
