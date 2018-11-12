@@ -15,15 +15,9 @@
 IRrecv irrecv(0);
 decode_results results;
 
-int satiety = 100;
-int health = 100;
-int mood = 100;
-int timer = 0;
-
 float temperature;
 float light;
 int sound;
-
 int pinCS = 9;
 int numberOfHorizontalDisplays = 4; // количество матриц по-горизонтали
 int numberOfVerticalDisplays = 1; // количество матриц по-вертикали
@@ -36,16 +30,17 @@ int width = 5 + spacer; // размер шрифта
 //String tape = "TEST"; //тест дисплея
 int wait = 50; // время между крайними перемещениями букв
 
-void info(float a, int b, int c);
-void pet()
-void feed();
-void tablet();
-void bath();
-void cookie();
-void punishment();
-void Sansukumi_ken();
-void emotion(float one, int two, int three, int four, int five, int six);
-void proc();
+void setup(){
+  matrix.setRotation(3, 1);
+  matrix.setRotation(2, 1);
+  matrix.setRotation(1, 1);
+  matrix.setRotation(0, 1);
+  Serial.begin(9600);
+  irrecv.enableIRIn();
+  pinMode(1, INPUT);
+  matrix.setIntensity(7); // яркость
+}
+
 void changeTextOfMatrix(String tape){
     for ( int i = 0 ; i < width * tape.length() + matrix.width() - 1 - spacer; i++ ) {
         matrix.fillScreen(LOW);
@@ -66,26 +61,26 @@ void changeTextOfMatrix(String tape){
         delay(wait);
     }
 }
-void setup(){
-  matrix.setRotation(3, 1);
-  matrix.setRotation(2, 1);
-  matrix.setRotation(1, 1);
-  matrix.setRotation(0, 1);
-  Serial.begin(9600);
-  irrecv.enableIRIn();
-  pinMode(1, INPUT);
-  matrix.setIntensity(7); // яркость
-  randomSeed(100);
-  changeTextOfMatrix("Robocat/TOMODACHI 1.0");
-}
-
-
 
 void loop(){
-  temperature = analogRead(A0);
-  temperature /= (6.8);
-  light = analogRead(A1);
-  light = 0.512 * (1024-light);
-  sound = analogRead(A2);
+  float temperature = analogRead(A0) / (6.8);
+  Serial.println("\nTerm: ");
+  Serial.print(temperature);
+  changeTextOfMatrix("Term: " + String(temperature));
+  float light = 0.512 * (1024 - analogRead(A1));
+  Serial.println("\nLight: ");
+  Serial.print(light);
+  changeTextOfMatrix("Light: " + String(light));
+  float sound = analogRead(A2);
+  Serial.println("\nSound: ");
+  Serial.print(sound);
+  changeTextOfMatrix("Sound: " + String(sound));
+  
+  if (irrecv.decode(&results))
+  {
+    Serial.println("\nButton code: ");
+    Serial.print(results.value);
+  }
+  delay(1000);
 }
 
