@@ -37,7 +37,7 @@ int width = 5 + spacer; // размер шрифта
 int wait = 50; // время между крайними перемещениями букв
 
 void info(float a, int b, int c);
-void pet()
+void pet();
 void feed();
 void tablet();
 void bath();
@@ -77,11 +77,13 @@ void setup(){
   matrix.setIntensity(7); // яркость
   randomSeed(100);
   changeTextOfMatrix("Robocat/TOMODACHI 1.0");
+  changeTextOfMatrix("By Kirill");
 }
 
 
 
 void loop(){
+  changeTextOfMatrix("Work In Progress ^-^");
   temperature = analogRead(A0);
   temperature /= (6.8);
   light = analogRead(A1);
