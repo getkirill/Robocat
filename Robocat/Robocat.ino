@@ -15,6 +15,9 @@
 IRrecv irrecv(0);
 decode_results results;
 
+float temperature;
+float light;
+int sound;
 int pinCS = 9;
 int numberOfHorizontalDisplays = 4; // количество матриц по-горизонтали
 int numberOfVerticalDisplays = 1; // количество матриц по-вертикали
