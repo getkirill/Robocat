@@ -36,16 +36,16 @@ int width = 5 + spacer; // размер шрифта
 //String tape = "TEST"; //тест дисплея
 int wait = 50; // время между крайними перемещениями букв
 
-void info(float a, int b, int c);
-void pet();
-void feed();
-void tablet();
-void bath();
-void cookie();
-void punishment();
-void Sansukumi_ken();
-void emotion(float one, int two, int three, int four, int five, int six);
-void proc();
+void info(float a, int b, int c){};
+void pet(){};
+void feed(){};
+void tablet(){};
+void bath(){};
+void cookie(){};
+void punishment(){};
+void Sansukumi_ken(){};
+void emotion(float one, int two, int three, int four, int five, int six){};
+void proc(){};
 void changeTextOfMatrix(String tape){
     for ( int i = 0 ; i < width * tape.length() + matrix.width() - 1 - spacer; i++ ) {
         matrix.fillScreen(LOW);
@@ -83,11 +83,48 @@ void setup(){
 
 
 void loop(){
-  changeTextOfMatrix("Work In Progress ^-^");
+  changeTextOfMatrix(":)");
   temperature = analogRead(A0);
   temperature /= (6.8);
   light = analogRead(A1);
   light = 0.512 * (1024-light);
   sound = analogRead(A2);
+  if (irrecv.decode(&results)){
+    Serial.print("CODE OF BTN ");
+    Serial.println(results.value, HEX);
+    if (results.value == 0xD7E84B1B){
+      info(temperature, light, sound);
+      changeTextOfMatrix("INFO");
+    }
+    if (results.value == 0x511DBB){
+      feed();
+      changeTextOfMatrix("FEED");
+    }
+    if(results.value == 0xA3C8EDDB){
+      Sansukumi_ken();
+      changeTextOfMatrix("GAME");
+    }
+    if(results.value == 0x52A3D41F){
+      tablet();
+      changeTextOfMatrix("TABLET");
+    }
+    if(results.value == 0x20FE4DBB){
+      bath();
+      changeTextOfMatrix("BATH");
+    }
+    if(results.value == 0xC101E57B){
+      cookie();
+      changeTextOfMatrix("COOKIE");
+    }
+    if(results.value == 0x97483BFB){
+      punishment();
+      changeTextOfMatrix("PUNISHMENT");
+    }
+    if(results.value == 0xF0C41643){
+      pet();
+      changeTextOfMatrix("PET()");
+    }
+    irrecv.resume();
+  }
 }
 
