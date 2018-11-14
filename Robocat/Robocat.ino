@@ -35,7 +35,56 @@ int width = 5 + spacer; // размер шрифта
 
 //String tape = "TEST"; //тест дисплея
 int wait = 50; // время между крайними перемещениями букв
-
+const byte smile[8] = {
+    0x01111110,
+    0x10000001,
+    0x10100101,
+    0x10000001,
+    0x10100101,
+    0x10011001,
+    0x10000001,
+    0x01111110
+};
+const byte coldy[8] = {
+    0x01111110,
+    0x10100101,
+    0x10011001,
+    0x10100101,
+    0x10000001,
+    0x10111101,
+    0x10000001,
+    0x01111110
+};
+const byte hot[8] = {
+    0x01111110,
+    0x10000001,
+    0x10100101,
+    0x10000001,
+    0x10111101,
+    0x10011001,
+    0x10000001,
+    0x01111110
+};
+const byte loud[8] = {
+    0x01111110,
+    0x10000001,
+    0x10100101,
+    0x10000001,
+    0x10011001,
+    0x10100101,
+    0x10000001,
+    0x01111110
+};
+const byte sleep[8] = {
+    0x01111110,
+    0x10000001,
+    0x10111101,
+    0x10000001,
+    0x10100101,
+    0x10011001,
+    0x10000001,
+    0x01111110
+};
 void info(float a, int b, int c){};
 void pet(){};
 void feed(){};
@@ -66,6 +115,15 @@ void changeTextOfMatrix(String tape){
         delay(wait);
     }
 }
+void DrawMatrix(const byte data[8]){
+  for ( int y = 0; y < 8; y++ ) {
+        for ( int x = 0; x < 8; x++ ) {
+            // зажигаем x-й пиксель в y-й строке
+            matrix.drawPixel(x, y, data[y] & (1<<x));
+        }
+    }
+    matrix.write(); // вывод всех пикселей на матрицу
+}
 void setup(){
   matrix.setRotation(3, 1);
   matrix.setRotation(2, 1);
@@ -84,6 +142,11 @@ void setup(){
 
 void loop(){
   changeTextOfMatrix(":)");
+  DrawMatrix(smile);
+  DrawMatrix(coldy);
+  DrawMatrix(hot);
+  DrawMatrix(loud);
+  DrawMatrix(sleep);
   temperature = analogRead(A0);
   temperature /= (6.8);
   light = analogRead(A1);
