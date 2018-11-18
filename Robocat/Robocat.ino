@@ -35,67 +35,67 @@ int width = 5 + spacer; // размер шрифта
 
 //String tape = "TEST"; //тест дисплея
 int wait = 50; // время между крайними перемещениями букв
-const byte smile[8] = {
-    0x01111110,
-    0x10000001,
-    0x10100101,
-    0x10000001,
-    0x10100101,
-    0x10011001,
-    0x10000001,
-    0x01111110
-};
-const byte coldy[8] = {
-    0x01111110,
-    0x10100101,
-    0x10011001,
-    0x10100101,
-    0x10000001,
-    0x10111101,
-    0x10000001,
-    0x01111110
-};
-const byte hot[8] = {
-    0x01111110,
-    0x10000001,
-    0x10100101,
-    0x10000001,
-    0x10111101,
-    0x10011001,
-    0x10000001,
-    0x01111110
-};
-const byte loud[8] = {
-    0x01111110,
-    0x10000001,
-    0x10100101,
-    0x10000001,
-    0x10011001,
-    0x10100101,
-    0x10000001,
-    0x01111110
-};
-const byte sleep[8] = {
-    0x01111110,
-    0x10000001,
-    0x10111101,
-    0x10000001,
-    0x10100101,
-    0x10011001,
-    0x10000001,
-    0x01111110
-};
-void info(float a, int b, int c){};
-void pet(){};
-void feed(){};
-void tablet(){};
-void bath(){};
-void cookie(){};
-void punishment(){};
-void Sansukumi_ken(){};
-void emotion(float one, int two, int three, int four, int five, int six){};
-void proc(){};
-void changeTextOfMatrix(String tape){
+//byte smile[8] = {
+//    0x01111110,
+//    0x10000001,
+//    0x10100101,
+//    0x10000001,
+//    0x10100101,
+//    0x10011001,
+//    0x10000001,
+//    0x01111110
+//};
+//byte coldy[8] = {
+//    0x01111110,
+//    0x10100101,
+//    0x10011001,
+//    0x10100101,
+//    0x10000001,
+//    0x10111101,
+//    0x10000001,
+//    0x01111110
+//};
+//byte hot[8] = {
+//    0x01111110,
+//    0x10000001,
+//    0x10100101,
+//    0x10000001,
+//    0x10111101,
+//    0x10011001,
+//    0x10000001,
+//    0x01111110
+//};
+//byte loud[8] = {
+//    0x01111110,
+//    0x10000001,
+//    0x10100101,
+//    0x10000001,
+//    0x10011001,
+//    0x10100101,
+//    0x10000001,
+//    0x01111110
+//};
+//byte sleep[8] = {
+//    0x01111110,
+//    0x10000001,
+//    0x10111101,
+//    0x10000001,
+//    0x10100101,
+//    0x10011001,
+//    0x10000001,
+//    0x01111110
+//};
+void info(float a, int b, int c);
+void pet();
+void feed();
+void tablet();
+void bath();
+void cookie();
+void punishment();
+void Sansukumi_ken();
+void emotion(float one, int two, int three, int four, int five, int six);
+void proc();
+void Text(String tape){
     for ( int i = 0 ; i < width * tape.length() + matrix.width() - 1 - spacer; i++ ) {
         matrix.fillScreen(LOW);
 
@@ -106,24 +106,24 @@ void changeTextOfMatrix(String tape){
         while ( x + width - spacer >= 0 && letter >= 0 ) {
             if ( letter < tape.length() ) {
                 matrix.drawChar(x, y, tape[letter], HIGH, LOW, 1);
-            }
+            };
             letter--;
             x -= width;
-        }
+        };
 
         matrix.write();
         delay(wait);
-    }
-}
-void DrawMatrix(const byte data[8]){
-  for ( int y = 0; y < 8; y++ ) {
-        for ( int x = 0; x < 8; x++ ) {
-            // зажигаем x-й пиксель в y-й строке
-            matrix.drawPixel(x, y, data[y] & (1<<x));
-        }
-    }
-    matrix.write(); // вывод всех пикселей на матрицу
-}
+    };
+};
+//void DrawMatrix(byte data[8]){
+//  matrix.fillScreen(LOW); // очистка матрицы
+//  for ( int y = 0; y < 8; y++ ) {
+//      for ( int x = 0; x < 8; x++ ) {
+//          matrix.drawPixel(x, y, data[y] & (1<<x));  // зажигаем x-й пиксель в y-й строке
+//      };
+//  };
+//  matrix.write(); // вывод всех пикселей на матрицу
+//};
 void setup(){
   matrix.setRotation(3, 1);
   matrix.setRotation(2, 1);
@@ -134,19 +134,24 @@ void setup(){
   pinMode(1, INPUT);
   matrix.setIntensity(7); // яркость
   randomSeed(100);
-  changeTextOfMatrix("Robocat/TOMODACHI 1.0");
-  changeTextOfMatrix("By Kirill");
-}
+  Text("Robocat/TOMODACHI 1.0");
+  Text("By Kirill");
+};
 
 
 
 void loop(){
-  changeTextOfMatrix(":)");
-  DrawMatrix(smile);
-  DrawMatrix(coldy);
-  DrawMatrix(hot);
-  DrawMatrix(loud);
-  DrawMatrix(sleep);
+//  Text(":)");
+//  DrawMatrix(smile);
+//  delay(1000);
+//  DrawMatrix(coldy);
+//  delay(1000);
+//  DrawMatrix(hot);
+//  delay(1000);
+//  DrawMatrix(loud);
+//  delay(1000);
+//  DrawMatrix(sleep);
+//  delay(1000);
   temperature = analogRead(A0);
   temperature /= (6.8);
   light = analogRead(A1);
@@ -157,37 +162,39 @@ void loop(){
     Serial.println(results.value, HEX);
     if (results.value == 0xD7E84B1B){
       info(temperature, light, sound);
-      changeTextOfMatrix("INFO");
-    }
+    };
     if (results.value == 0x511DBB){
       feed();
-      changeTextOfMatrix("FEED");
-    }
+    };
     if(results.value == 0xA3C8EDDB){
       Sansukumi_ken();
-      changeTextOfMatrix("GAME");
-    }
+    };
     if(results.value == 0x52A3D41F){
       tablet();
-      changeTextOfMatrix("TABLET");
-    }
+    };
     if(results.value == 0x20FE4DBB){
       bath();
-      changeTextOfMatrix("BATH");
-    }
+    };
     if(results.value == 0xC101E57B){
       cookie();
-      changeTextOfMatrix("COOKIE");
-    }
+    };
     if(results.value == 0x97483BFB){
       punishment();
-      changeTextOfMatrix("PUNISHMENT");
-    }
+    };
     if(results.value == 0xF0C41643){
       pet();
-      changeTextOfMatrix("PET()");
-    }
+    };
     irrecv.resume();
-  }
-}
+  };
+  timer = int(millis() / 1000);
+  
+  if (timer % 10 == 0){
+    satiety -= 1;
+    health -= 1;
+    mood -= 1;
+    if (satiety <= 0) health -= 5;
+    if (mood <= 0) health -= 2;
+  };
+  emotion(temperature, light, sound, health, satiety, mood);
+};
 
